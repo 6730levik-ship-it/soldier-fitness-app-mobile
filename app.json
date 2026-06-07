@@ -30,7 +30,11 @@
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "publicPath": "/soldier-fitness-app-mobile/"
+    },
+    "experiments": {
+      "baseUrl": "/soldier-fitness-app-mobile/"
     },
     "plugins": [
       [
