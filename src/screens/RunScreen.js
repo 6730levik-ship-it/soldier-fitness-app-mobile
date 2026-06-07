@@ -3,10 +3,28 @@ import {
   View, Text, StyleSheet, TouchableOpacity, ScrollView,
   Alert, Dimensions, Platform, Vibration,
 } from 'react-native';
-import MapView, { Polyline, Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { useKeepAwake } from 'expo-keep-awake';
 import * as Speech from 'expo-speech';
+
+// react-native-maps only works on native — stub it on web
+let MapView, Polyline, Marker;
+if (Platform.OS !== 'web') {
+  const Maps = require('react-native-maps');
+  MapView = Maps.default;
+  Polyline = Maps.Polyline;
+  Marker = Maps.Marker;
+} else {
+  const WebMap = ({ style, children }) => (
+    <View style={[style, { backgroundColor: '#1e293b', alignItems: 'center', justifyContent: 'center' }]}>
+      <Text style={{ color: '#94a3b8', fontSize: 14, fontWeight: '600' }}>🗺️ מפה זמינה באפליקציה הנייד</Text>
+      <Text style={{ color: '#64748b', fontSize: 12, marginTop: 4 }}>GPS פעיל ברקע</Text>
+    </View>
+  );
+  MapView = WebMap;
+  Polyline = () => null;
+  Marker = () => null;
+}
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors } from '../theme/colors';
 import {
@@ -150,7 +168,7 @@ export default function RunScreen({ navigation }) {
                 `ק"מ ${km}. קצב ${pace} לק"מ. זמן ${formatTime(elapsedRef.current)}.`,
                 { language: 'he-IL', rate: 1.1 },
               );
-              Vibration.vibrate([100, 100, 100]);
+              if (Platform.OS !== 'web') Vibration.vibrate([100, 100, 100]);
             }
 
             // Test finish
