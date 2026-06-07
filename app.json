@@ -1,17 +1,29 @@
 {
   "expo": {
-    "name": "TacFitApp",
-    "slug": "TacFitApp",
+    "name": "TacFit",
+    "slug": "tacfit-soldier-fitness",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "com.tacfit.soldierapp",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "TacFit צריך גישה למיקום כדי לעקוב אחרי הריצה שלך בזמן אמת.",
+        "NSLocationAlwaysUsageDescription": "TacFit צריך גישה למיקום כדי לעקוב אחרי הריצה שלך."
+      }
     },
     "android": {
+      "package": "com.tacfit.soldierapp",
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "FOREGROUND_SERVICE",
+        "VIBRATE"
+      ],
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#2563EB",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
@@ -19,6 +31,14 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "TacFit צריך גישה למיקום למעקב ריצה."
+        }
+      ]
+    ]
   }
 }
